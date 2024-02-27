@@ -1,32 +1,30 @@
 const { $ } = require('@wdio/globals')
 
-/**
- * sub page containing specific selectors and methods for a specific page
- */
+
 class LoginPage {
     /**
-     * define selectors using getter methods
+     * selectors
      */
-    get inputUsername () {
-        return $('#user-name');
+    elements = {
+    inputUsername: () => $('#user-name'),
+    inputPassword: () => $('#password'),
+    btnSubmit: () => $('input#login-button'),
+    alertErrorLogin: ()  => $('.error-message-container')
+
     }
 
-    get inputPassword () {
-        return $('#password');
-    }
-
-    get btnSubmit () {
-        return $('input#login-button');
-    }
 
     /**
-     * a method to encapsule automation code to interact with the page
-     * e.g. to login using username and password
+     * Login to the application with the provided username and password.
+     * 
+     * @param {string} username - The username to use for login.
+     * @param {string} password - The password to use for login.
+     * @returns {Promise<void>} - A Promise that resolves when the login process is complete.
      */
     async login (username, password) {
-        await this.inputUsername.setValue(username);
-        await this.inputPassword.setValue(password);
-        await this.btnSubmit.click();
+        await this.elements.inputUsername().setValue(username);
+        await this.elements.inputPassword().setValue(password);
+        await this.elements.btnSubmit().click();
     }
 
 }
